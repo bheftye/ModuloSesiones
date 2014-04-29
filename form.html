@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel Locker Agencia Creativa S.A. de C.V.">
+    <meta name="author" content="Luis Josué Caamal Barbosa">
+
+    <title>Listado</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Add custom CSS here -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="js/summernote/summernote.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<!--Sección de la cabezera-->
+	<header>
+    	<!--Header que se muestra en las clases lg y md-->
+    	<div class="styled-large">
+            <div id="navBlack" class="jumbotron navbar-fixed-top">
+                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
+                    <img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">
+                    <spam id="urlLocker">www.locker.com.mx</spam>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9">
+                    <p id="fecha">01 Marzo 2014</p>
+                    <spam id="username">Luis Caamal</spam>       	
+                </div>
+            </div>
+            <div id="navBlue" class="jumbotron navbar-fixed-top">
+                <div class="col-lg-2">
+                    <div id="barraazul">
+                        <p id="panel">PANEL DE CONTROL</p>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <ul id="ulmenu">
+                        <li id="li1"><img src="img/exit.png" width="15" height="17" class="imgresources"><spam class="letras">Cerrar sesión</spam></li>
+                        <li class="limenu"><img src="img/msn.png" width="18" height="14" class="imgresources"><spam class="letras">Mensajes</spam></li>
+                        <li class="limenu"><img src="img/user.png" width="19" height="19" class="imgresources"><spam class="letras">Perfil</spam></li>
+                        <li class="limenu"><img src="img/tuerca.png" width="18" height="19" class="imgresources"><spam class="letras">Configuración</spam></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--Header que se muestra en las clases sm y xs-->
+        <div class="styled-small">
+        	<div id="navBlack" class="jumbotron navbar-fixed-top">
+                <div class="col-sm-2 col-xs-3">
+                    <a id="menu-toggle" href="#"><img id="btnmenu" src="img/btnmenu.png"></a>
+                </div>
+                <div class="col-sm-9 col-xs-9">
+                	<img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">
+                </div>
+            </div>
+            <div id="navBlueMovil" class="jumbotron navbar-fixed-top">
+            	<p id="panel">PANEL DE CONTROL</p>
+            </div>
+            <div id="navBlueMovil2" class="jumbotron navbar-fixed-top">
+            	<div align="center" class="col-sm-3 col-xs-3">
+                	<img src="img/tuerca.png" class="imgresources">
+                </div>
+                <div align="center" class="col-sm-3 col-xs-3">
+                	<img src="img/user.png" class="imgresources">
+                </div>
+                <div align="center" class="col-sm-3 col-xs-3">
+                	<img src="img/msn.png" class="imgresources">
+                </div>
+                <div align="center" class="col-sm-3 col-xs-3">
+                	<img src="img/exit.png" class="imgresources">
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--Es el que contiene a toda la pagina-->
+    <div id="wrapper" class="wrapper-movil">
+        <!-- Sidebar Seccion del menu -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li><a href="list.html">Listados</a>
+                </li>
+ 				<hr class="hrmenu">            
+                <li><a href="form.html">Formulario</a>
+                </li>
+                <hr class="hrmenu"> 
+                <li><a href="#">Ordenar</a>
+                </li>
+                <hr class="hrmenu"> 
+                <li><a href="#">Proyectos</a>
+                </li>
+                <hr class="hrmenu"> 
+                <li><a href="#">Mensajes</a>
+                </li>
+                <hr class="hrmenu"> 
+                <li><a href="#">Hosting</a>
+                </li>
+                <hr class="hrmenu"> 
+                <li><a href="#">Contacto</a>
+                </li>
+                <hr class="hrmenu"> 
+            </ul>
+        </div>
+    
+        <!-- Page content Sección del contenido de la pagina-->
+        <div id="page-content-wrapper">
+            
+            <!-- Keep all page content within the page-content inset div! -->
+            <div class="page-content inset">
+                <div class="row rowedit">
+                	<!--Seccion del titulo y el boton de agregar-->
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <p class="titulo">Nueva Noticia</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    	<button value="" class="buttonguardar">Guardar y Publicar</button>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    	<hr class="hrmenu">
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <!--Seccion de los forms
+                    ---------------------------------------------------------------------------------
+                    	En esta sección esta para editar el titulo y la descripcion
+                    -------------------------------------------------------------------------------->
+                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                        <input type="text" class="form-control" placeholder="Ingrese el titulo aquí...">
+                        <br>
+                        <input type="text" class="form-control styled-small subitulo" placeholder="Ingrese subtitulo aquí...">
+                        <textarea name="summernote" id="summernote" cols="30" rows="10" placeholder="Escriba aquí..."></textarea>
+                        <br>
+                    </div><!--Div de cierre col-lg-9-->
+                    <!--------------------------------------------
+                    	En esta sección es del subtitulo y la imagen principal
+                    ---------------------------------------------->
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                    	<input type="text" class="form-control styled-large" placeholder="Ingrese subtitulo aquí...">
+                        <br>
+                        <div class="fileUpload btn btn-default" style="width:100%">
+                            <span class="inputUploadFont">Agregar Imagen de Portada</span>
+                            <input id="files" type="file" class="upload"/>
+                        </div>
+                        <br>
+                        <div class="text-center textHelper">
+                        	Tipo de archivos permitidos: jpg, jpeg, png, gif.
+                            <br>
+                            Tamaño máximo de archivo: 2,000MB.
+                        </div>
+                        <br>
+                        <!--Aquí es donde se previsualiza la imagen-->
+                        <span class="textHelper">Previsualizar:</span>
+                        <br>
+                        <output align="center" id="list"></output>
+                    </div><!--Div de cierre col-lg-5-->
+                    
+                    <div class="clearfix"></div>
+                    <!--------------------------------------------
+                    Aqui es la sección para subir las imágenes secundarias
+                    ---------------------------------------------->
+                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                    	<div class="fileUpload btn btn-default" style="width:100%">
+                            <span class="inputUploadFont">Agregar Imágenes Secundarias</span>
+                            <input id="files2" type="file" class="upload" multiple/>
+                        </div>
+                    </div>
+                    <!--Sección del lado izquierdo-->
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 textHelper">
+                    	Tipo de archivos permitidos: jpg, jpeg, png, gif.
+                        <br>
+                        Tamaño máximo de archivo: 1GB.
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    	<span class="textHelper">Previsualizar:</span>
+                    </div>
+                    <br>
+                    <!--Aquí es donde se previsualiza las imágenes secundarias-->
+                    <output align="center" id="list2"></output>
+                    
+                    <!--Este div contiene la barra inferior-->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    	<hr class="hrmenu">
+                    </div>
+                    <!--Este div contiene al boton inferior-->
+                    <div class="clearfix"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    	<button value="" class="buttonguardar">Guardar y Publicar</button>
+                    </div>
+                    
+                    <!--Sección del pie de pagina-->
+                    <footer id="footer">
+                    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                        	Derechos Reservados a Locker Agencia Creativa S.A. de C.V.
+                            <br>
+                            soporte@locker.com.mx
+                            <br>
+                            www.locker.com.mx
+                    	</div>
+                    </footer>
+                </div><!--Div de cierre del row-->
+            </div><!--Div de cierre de page-content inset-->
+        </div><!--Div de cierre de page-content-wrapper-->
+    </div><!--Div de cierre de id Wrapper-->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+    
+     <!-- Page Specific Plugins -->
+    <script src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/tablesorter/tables.js"></script>
+    <!-- Plugin especifico para summernote-->
+    <script src="js/summernote/summernote.min.js"></script>
+
+    <!-- Custom JavaScript for the Menu Toggle -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+    });
+    </script>
+    <!--Java script que hace que el footer este siempre abajo-->
+    <script>
+  		$(document).ready(function() {
+			var docHeight = $(window).height();
+   			var footerHeight = $('#footer').height();
+   			var footerTop = $('#footer').position().top + footerHeight;
+
+   			if (footerTop < docHeight) {
+    			$('#footer').css('margin-top', -75+ (docHeight - footerTop) + 'px');
+   			}
+  		});
+	</script>
+    <!--Scripts Especificos para los formularios
+    ----------------------------------------------
+    Script que inicia el summernote-->
+    <script>
+		$('#summernote').summernote ({
+			height: 342
+		});
+	</script>
+    <!--Script que permite previsualizar la imagen primaria-->
+    <script>
+	  function handleFileSelect(evt) {
+		var files = evt.target.files; // FileList object
+	
+		// Loop through the FileList and render image files as thumbnails.
+		for (var i = 0, f; f = files[i]; i++) {
+	
+		  // Only process image files.
+		  if (!f.type.match('image.*')) {
+			continue;
+		  }
+	
+		  var reader = new FileReader();
+	
+		  // Closure to capture the file information.
+		  reader.onload = (function(theFile) {
+			return function(e) {
+			  // Render thumbnail.
+			  var span = document.createElement('span');
+			  span.innerHTML = ['<img width="auto" height="221" src="', e.target.result,
+								'" title="', escape(theFile.name), '"/>'].join('');
+			  $("#list").empty();
+			  document.getElementById('list').insertBefore(span, null);
+			};
+		  })(f);
+	
+		  // Read in the image file as a data URL.
+		  reader.readAsDataURL(f);
+		}
+	  }
+	
+	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+	</script>
+    <!--Script que permite previsualizar la imagen Secundaria-->
+    <script>
+	  function handleFileSelect(evt) {
+		var files2 = evt.target.files; // FileList object
+		$("#list2").empty();
+		// Loop through the FileList and render image files as thumbnails.
+		for (var i = 0, f; f = files2[i]; i++) {
+	
+		  // Only process image files.
+		  if (!f.type.match('image.*')) {
+			continue;
+		  }
+	
+		  var reader = new FileReader();
+	
+		  // Closure to capture the file information.
+		  reader.onload = (function(theFile) {
+			return function(e) {
+			  // Render thumbnail.
+			  var span = document.createElement('div');
+			  span.className = "col-lg-3 col-md-4 col-sm-12 col-xs-12";
+			  span.innerHTML = ['<img style="margin: 0 0 20px 0" class="img-responsive" src="', e.target.result,
+								'" title="', escape(theFile.name), '"/>'].join('');
+			  document.getElementById('list2').insertBefore(span, null);
+			};
+		  })(f);
+	
+		  // Read in the image file as a data URL.
+		  reader.readAsDataURL(f);
+		}
+	  }
+	
+	  document.getElementById('files2').addEventListener('change', handleFileSelect, false);
+	</script>
+</body>
+</html>
