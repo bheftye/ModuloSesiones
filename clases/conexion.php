@@ -5,11 +5,11 @@ class conexion{
 	function conexion()	
 	{	
 		$this->host='localhost';		
-		$this->user='locker07_brent';		
-		$this->password='10Hooligans92';		
+		$this->user='root';		
+		$this->password='root';		
 		/*$this->user='root';		
 		$this->password='';*/		
-		$this->bd='locker07_patadeperro';
+		$this->bd='brent_patadeperro';
 	}	
 		
 	function conectar()	

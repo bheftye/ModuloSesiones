@@ -3,7 +3,7 @@
     session_start();
     if( isset($_SESSION['idusuario'])){
         if($_SESSION['idusuario'] != "" && $_SESSION['idusuario'] != "0")
-        header("Location:listpaquete.php");
+        header("Location:formusuario.php");
     }
 ?>
 <!DOCTYPE html>
@@ -46,8 +46,8 @@
     	<div class="styled-large">
             <div id="navBlack" class="jumbotron navbar-fixed-top">
                 <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
-                    <img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">
-                    <spam id="urlLocker">www.locker.com.mx</spam>
+                    <!---<img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">-->
+                    <spam id="urlLocker"></spam>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9">
                     <p id="fecha"><?php echo date('d')." ".$meses[date('n')-1]. " ".date('Y') ;?></p>      	
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-lg-11 col-md-10">
-                    <p class="urlweb">Bienvenido al panel de control de www.patadeperroviajes.com</p>
+                    <p class="urlweb">Bienvenido al modulo de sesiones</p>
                 </div>
             </div>
         </div>
@@ -68,14 +68,14 @@
         <div class="styled-small">
         	<div id="navBlack" class="jumbotron navbar-fixed-top">
                 <div class="col-sm-12 col-xs-12">
-                	<img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">
+                	<!--<img id="imgLogo" class="imgNavBlack" src="img/logolocker.png">-->
                 </div>
             </div>
             <div id="navBlueMovil" class="jumbotron navbar-fixed-top">
             	<p id="panel">PANEL DE CONTROL</p>
             </div>
             <div id="navBlueMovil2" class="jumbotron navbar-fixed-top">
-            	 <p class="urlweb">Bienvenido al panel de control de www.patadeperroviajes.com</p>
+            	 <p class="urlweb">Bienvenido al modulo de sesiones.</p>
             </div>
         </div>
     </header>
@@ -113,6 +113,9 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             	<a href="#" data-toggle="modal" data-target="#myModal"><p class="letraslogin">Ha olvidado su contraseña.</p></a>
                             </div>
+                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <a href="#" id="boton_registro" data-toggle="modal" data-target="#myModal2"><p class="letraslogin">Registrarse</p></a>
+                            </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     			<hr class="hrmenu">
                     		</div>
@@ -145,6 +148,47 @@
       <div class="modal-footer">
         	<!--<button type="submit" class="btn btn-primary" onClick="enviarCorreo()">Enviar</button>-->
             <a href="#" onClick="enviarCorreo()">Enviar</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Registrarse</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12" id="Infopass3"></div>
+            <p id="errorMessage">Hola<p/>
+                <form method="post" action="operaciones.php" onsubmit="return registrarUsuario()">   
+                    <div id="titulo2" class="form-group espacios">
+                        <input type="text" id="usuario2" name="usuario" class="form-control" placeholder="Usuario" >
+                    </div>
+                    <div id="pass2" class="form-group espacios">
+                        <input type="password" name="pass" id="password2" class="form-control" placeholder="Contraseña" >
+                    </div>
+                    <div id="passConfirm" class="form-group espacios">
+                        <input type="password" name="pass_confirm" id="password_confirm" class="form-control" placeholder="Confirma Contraseña" >
+                    </div>
+                    <div id="name" class="form-group espacios">
+                        <input type="text" name="name_txt" id="name_txt" class="form-control" placeholder="Nombre" >
+                    </div>
+                    <div id="apellido" class="form-group espacios">
+                        <input type="text" name="last_name_txt" id="last_name_txt" class="form-control" placeholder="Apellido" >
+                    </div>
+                    <div class="text-center">
+                    <div id="pregunta" class="form-group espacios">
+                        <input type="text" name="question_txt" id="question" class="form-control" placeholder="Pregunta Secreta" >
+                    </div>
+                    <div id="passConfirm" class="form-group espacios">
+                        <input type="text" name="answer_txt" id="answer" class="form-control" placeholder="Respuesta Secreta" >
+                    </div>
+                        <button type="submit"  name="operaciones" value="agregarusuario" class="buttonacceder">Registrarse</button>
+                </form>
+        </div>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -187,7 +231,7 @@
                 console.log(data);
                 if(data == "true" || data == "false"){
                     if(data =="true"){
-                        window.location.href="listpaquete.php";
+                        window.location.href="formusuario.php";
                     }
                     else{
                         $('.error').css({display:'block'});
@@ -205,6 +249,39 @@
         });
     }
 
+    function registrarUsuario(){
+
+        var usuario = $("#usuario2").val();
+        var password = $("#password2").val();
+        var password2 = $("#password_confirm").val();
+        var nombre = $("#name_txt").val();
+        var apellido = $("#last_name_txt").val();
+        var pregunta = $("#question_txt").val();
+        var respuesta =$("#answer_txt").val();
+        var mensaje ="";
+
+        var camposLlenos = usuario != "" && password != "" && password2 != "" && nombre != "" && apellido != "" && pregunta != "" && respuesta != "";
+
+        if(camposLlenos){
+            if(password == password2){
+                $.unblockUI();
+                return true;
+            }
+            else{
+                mensaje = "Contraseñas no coinciden.";
+            }
+           
+        }
+        else{
+             mensaje ="Llena todos los campos";
+        }
+       
+        $("#errorMessage").html(mensaje).css({color:"red"});
+        
+        return false;
+
+        }
+
 	function enviarCorreo(){
 		correo=$('#inputSuccess3').val();
 		$.ajaxSetup({ cache: false });
@@ -215,7 +292,8 @@
 				contentType: "application/x-www-form-urlencoded",
 				url:"operaciones.php",
 				data:"email="+correo+"&operaciones=recuperapass",
-				success:function(data){				
+				success:function(data){
+
 					if(data==0)
 					{
 						$('#Infopass3').html("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><p><strong>Advertencia!</strong> Este campo esta vacío.</p></div>")

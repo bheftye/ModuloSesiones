@@ -1,37 +1,35 @@
 <?php
 include_once('conexion.php');
-include_once('tipousuario.php');
-include_once('datosusuario.php');
 
 class usuario
 {
 	var $idusuario;
-	var $nomusuario;
+	var $user;
 	var $password;
 	var $status;
-	var $tiposusuario;
-	var $datosusuario;
+	var $preguntaSecreta;
+	var $respuestaSecreta;
+	var $nombre;
+	var $apellido;
 	
-	function usuario($a = 0, $b = '', $c = '', $stat = 0, $idtipo = 0)
+	function usuario($idusuario = 0, $user = '', $password = '', $stat = 0, $preguntaSecreta ="", $respuestaSecreta="", $nombre = "", $apellido ="")
 	{
-		$this->idusuario=$a;
-		$this->nomusuario=$b;
-		$this->password=$c;
+		$this->idusuario=$idusuario;
+		$this->user=$user;
+		$this->password=$password;
 		$this->status=$stat;
-		$this->tiposusuario= new tipousuario($idtipo,'','');
-		$this->tiposusuario->idtipousuario=$idtipo;
-		$this->datosusuario= new datosusuario($a,'','','','');
-	}
-	
-	function obtener_tipo_usuario()
-	{
-		$this->tiposusuario->obtener_tipousuario();
+		$this -> preguntaSecreta = $preguntaSecreta;
+		$this -> respuestaSecreta = $respuestaSecreta;
+		$this -> nombre  = $nombre;
+		$this -> apellido = $apellido;
 	}
 	
 	function inserta_usuario()
 	{
 		$conexion= new conexion();
-		$sql="insert into usuario (nomusuario,password,status,idtipousuario) values('".$this->nomusuario."',MD5('".$this->password."'),1,".$this->tiposusuario->idtipousuario.")";
+		$sql="insert into usuarios (user,password,status,question, answer, name, last_name) values('".$this->user."',MD5('".$this->password."'),1, '".$this -> preguntaSecreta."''
+			, '".$this -> respuestaSecreta."' , '".$this -> nombre."', '".$this -> apellido."')";
+		echo $sql;
 		return $this->idusuario=$conexion->ejecutar_sentencia($sql);
 	}
 	
@@ -40,163 +38,56 @@ class usuario
 		$conexion= new conexion();
 		$pedazo="";
 		$pedazo2='';
-		if($this->nomusuario != '')
-			$pedazo2="nomusuario='".$this->nomusuario."',";
+		if($this->user != '')
+			$pedazo2="user='".$this->user."',";
 		if ($this->password!='')   
 			$pedazo="password=MD5('".$this->password."'),";
-		$sql="update usuario set ".$pedazo2." ".$pedazo."status='".$this->status."',idtipousuario=".$this->tiposusuario->idtipousuario." where idusuario=".$this->idusuario;
+		$sql="update usuarios set ".$pedazo2." ".$pedazo."status='".$this->status."',idtipousuario=".$this->tiposusuario->idtipousuario.", pregunta = '".$this -> preguntaSecreta."', respuesta = '".$this -> respuestaSecreta."' where idusuario=".$this->idusuario;
 		return $conexion->ejecutar_sentencia($sql);
 	}
 	function modifica_usuario_pass()
 	{
 		$conexion= new conexion();
-		$sql="update usuario set password=MD5('".$this->password."') where idusuario=".$this->idusuario;
+		$sql="update usuarios set password=MD5('".$this->password."') where idusuario=".$this->idusuario;
 		$conexion->ejecutar_sentencia($sql);
 	}
 	function elimina_usuario()
 	{
 		$conexion=new conexion();
-		$sql="delete from usuario where idusuario=".$this->idusuario;
+		$sql="delete from usuarios where idusuario=".$this->idusuario;
 		return $conexion->ejecutar_sentencia($sql);
 	}
 	
 	function DesactivaUsuario()
 	{
 		$con=new conexion();
-		$sql="update usuario set status=0 where idusuario=".$this->idusuario;
+		$sql="update usuarios set status=0 where idusuario=".$this->idusuario;
 		$con->ejecutar_sentencia($sql);	
 	}
 	
 	function ActivaUsuario()
 	{
 		$con=new conexion();
-		$sql="update usuario set status=1 where idusuario=".$this->idusuario;
+		$sql="update usuarios set status=1 where idusuario=".$this->idusuario;
 		$con->ejecutar_sentencia($sql);	
-	}
-	
-	function listaUsuarioActivas()
-	{
-		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario where status=1";
-		$result=$conexion->ejecutar_sentencia($sql);
-		$resultados=array();
-		while ($row=mysql_fetch_array($result))
-		{
-			$registro=array();
-			$registro['idusuario']=$row['idusuario'];
-			$registro['nomusuario']=$row['nomusuario'];
-			$registro['password']=$row['password'];
-			$registro['status']=$row['status'];
-			$registro['idtipousuario']=$row['idtipousuario'];
-			$tipusuariolist = new tipousuario($registro['idtipousuario']);
-			$tipusuariolist->obtener_tipousuario();
-			$registro['nomtipo']=$tipusuariolist->nomtipousuario;
-			array_push($resultados,$registro);
-		}
-		mysql_free_result($result);
-		return $resultados;
-	}
-	
-	function listaUsuarioDesactivadas()
-	{
-		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario where status=0";
-		$result=$conexion->ejecutar_sentencia($sql);
-		$resultados=array();
-		while ($row=mysql_fetch_array($result))
-		{
-			$registro=array();
-			$registro['idusuario']=$row['idusuario'];
-			$registro['nomusuario']=$row['nomusuario'];
-			$registro['password']=$row['password'];
-			$registro['status']=$row['status'];
-			$registro['idtipousuario']=$row['idtipousuario'];
-			$tipusuariolist = new tipousuario($registro['idtipousuario']);
-			$tipusuariolist->obtener_tipousuario();
-			$registro['nomtipo']=$tipusuariolist->nomtipousuario;
-			array_push($resultados,$registro);
-		}
-		mysql_free_result($result);
-		return $resultados;
-	}
-	
-	function listaUsuarioBusqueda($pedazo)
-	{
-		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario where nomusuario like '%".$pedazo."%' order by status";
-		$result=$conexion->ejecutar_sentencia($sql);
-		$resultados=array();
-		while ($row=mysql_fetch_array($result))
-		{
-			$registro=array();
-			$registro['idusuario']=$row['idusuario'];
-			$registro['nomusuario']=$row['nomusuario'];
-			$registro['password']=$row['password'];
-			$registro['status']=$row['status'];
-			$registro['idtipousuario']=$row['idtipousuario'];
-			$tipusuariolist = new tipousuario($registro['idtipousuario']);
-			$tipusuariolist->obtener_tipousuario();
-			$registro['nomtipo']=$tipusuariolist->nomtipousuario;
-			array_push($resultados,$registro);
-		}
-		echo json_encode($resultados);
-	}
-	function lista_usuario_Ajax()
-	{
-		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario";
-		$result=$conexion->ejecutar_sentencia($sql);
-		$resultados=array();
-		while ($row=mysql_fetch_array($result))
-		{
-			$registro=array();
-			$registro['idusuario']=$row['idusuario'];
-			$registro['nomusuario']=$row['nomusuario'];
-			$registro['password']=$row['password'];
-			$registro['status']=$row['status'];
-			$registro['idtipousuario']=$row['idtipousuario'];
-			$tipusuariolist = new tipousuario($registro['idtipousuario']);
-			$tipusuariolist->obtener_tipousuario();
-			$registro['nomtipo']=$tipusuariolist->nomtipousuario;
-			array_push($resultados,$registro);
-		}
-		echo json_encode($resultados);
-	}
-	function lista_usuario()
-	{
-		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario";
-		$result=$conexion->ejecutar_sentencia($sql);
-		$resultados=array();
-		while ($row=mysql_fetch_array($result))
-		{
-			$registro=array();
-			$registro['idusuario']=$row['idusuario'];
-			$registro['nomusuario']=$row['nomusuario'];
-			$registro['password']=$row['password'];
-			$registro['status']=$row['status'];
-			$registro['idtipousuario']=$row['idtipousuario'];
-			$tipusuariolist = new tipousuario($registro['idtipousuario']);
-			$tipusuariolist->obtener_tipousuario();
-			$registro['nomtipo']=$tipusuariolist->nomtipousuario;
-			array_push($resultados,$registro);
-		}
-		mysql_free_result($result);
-		return $resultados;
 	}
 	
 	function obten_usuario()
 	{
 		$conexion=new conexion();
-		$sql="select idusuario,nomusuario,password,status,idtipousuario from usuario where idusuario=".$this->idusuario;
+		$sql="select idusuario,user,password,status,idtipousuario from usuarios where idusuario=".$this->idusuario;
 		$result=$conexion->ejecutar_sentencia($sql);
 		while($row=mysql_fetch_array($result))
 		{
 			$this->idusuario=$row['idusuario'];
-			$this->nomusuario=$row['nomusuario'];
+			$this->user=$row['user'];
 			$this->password=$row['password'];
 			$this->status=$row['status'];
 			$this->tiposusuario->idtipousuario=$row['idtipousuario'];
+			$this -> preguntaSecreta = $row["pregunta"];
+			$this -> respuestaSecreta = $row["respuesta"];
+			$this -> nombre = $row["name"];
+			$this -> apellido =$row["last_name"]
 		}
 		mysql_free_result($result);
 	}
@@ -204,13 +95,13 @@ class usuario
 	function VerficarDisponibilidadNomUsuario($nom)
 	{
 		$conexion=new conexion();
-		$sql="SELECT nomusuario FROM usuario where nomusuario='".$nom."'";
+		$sql="SELECT user FROM usuarios where user='".$nom."'";
 		$result=$conexion->ejecutar_sentencia($sql);
 		$resultados=array();
 		while ($row=mysql_fetch_array($result))
 		{
 			$registro=array();
-			$registro['nomusuario']=$row['nomusuario'];
+			$registro['user']=$row['user'];
 			array_push($resultados,$registro);
 		}
 		mysql_free_result($result);
@@ -219,7 +110,7 @@ class usuario
 	function VerficarPassword($idusuario)
 	{
 		$conexion=new conexion();
-		$sql="SELECT password FROM usuario where idusuario='".$idusuario."'";
+		$sql="SELECT password FROM usuarios where idusuario='".$idusuario."'";
 		$result=$conexion->ejecutar_sentencia($sql);
 		$resultados=array();
 		while ($row=mysql_fetch_array($result))
@@ -231,46 +122,19 @@ class usuario
 	function login()
 	{
 		$conexion=new conexion();
-		$sql="select * from usuario where nomusuario='".$this->nomusuario."'and password = MD5('".$this->password."') and status=1";
+		$sql="select * from usuarios where user='".$this->user."' and password = MD5('".$this->password."') and status=1";
 		$resultado=$conexion->ejecutar_sentencia($sql);
 		while($fila =mysql_fetch_array($resultado))
 		{
-			$this->idusuario=$fila['idusuario'];
-			$this->nomusuario=$fila['nomusuario'];
+			$this->idusuario=$fila['id_user'];
+			$this->user=$fila['user'];
 		}
-	}
-	function insertar_datos_usuario($nom,$correo,$tel)
-	{
-			$this->datosusuario= new datosusuario($this->idusuario,$nom,$correo,$tel);		
-			$this->datosusuario->agregar_datos_usuario();
-	}
-		
-	function modificar_datos_usuario($nom,$correo,$tel)
-	{
-			$this->datosusuario= new datosusuario($this->idusuario,$nom,$correo,$tel);	
-			$this->datosusuario->modificar_datos_usuario();
-	}
-		
-	function eliminar_datos_usuario()
-	{
-			$this->datosusuario->eliminar_datos_usuario();
-	}
-		
-	function obtener_datos()
-	{
-			$this->datosusuario->obtener_datos_usuario();
-	}
-		
-	function buscar_datos_email($email)
-	{
-			$this->datosusuario=new datosusuario(0,'',$email,'');
-			$this->datosusuario->buscaremail();
 	}
 	
 	function obtener_datos_usuarios($id)
 	{
 			 $con=new conexion();
-			 $sql="SELECT usuario.idusuario,nomusuario, datosusuario.idusuario, nombre,email,telefono from usuario, datosusuario where usuario.idusuario=datosusuario.idusuario and usuario.idusuario=".$id;
+			 $sql="SELECT usuario.idusuario,user, datosusuario.idusuario, nombre,email,telefono from usuario, datosusuario where usuario.idusuario=datosusuario.idusuario and usuario.idusuario=".$id;
 			 $resultados = $con->ejecutar_sentencia($sql);
 			 //echo $sql;
 			 

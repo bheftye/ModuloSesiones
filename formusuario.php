@@ -135,11 +135,9 @@ include('menu.php');
                     <!--Sección del pie de pagina-->
                     <footer id="footer">
                     	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                        	Derechos Reservados a Locker Agencia Creativa S.A. de C.V.
                             <br>
-                            soporte@locker.com.mx
+                            
                             <br>
-                            www.locker.com.mx
                     	</div>
                     </footer>
                 </div><!--Div de cierre del row-->
