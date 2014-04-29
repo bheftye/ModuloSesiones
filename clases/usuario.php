@@ -12,7 +12,7 @@ class usuario
 	var $nombre;
 	var $apellido;
 	
-	function usuario($idusuario = 0, $user = '', $password = '', $stat = 0, $preguntaSecreta ="", $respuestaSecreta="", $nombre = "", $apellido ="")
+	function usuario($idusuario = 0, $user = '', $password = '', $stat = 1, $preguntaSecreta ="", $respuestaSecreta="", $nombre = "", $apellido ="")
 	{
 		$this->idusuario=$idusuario;
 		$this->user=$user;
@@ -27,9 +27,7 @@ class usuario
 	function inserta_usuario()
 	{
 		$conexion= new conexion();
-		$sql="insert into usuarios (user,password,status,question, answer, name, last_name) values('".$this->user."',MD5('".$this->password."'),1, '".$this -> preguntaSecreta."''
-			, '".$this -> respuestaSecreta."' , '".$this -> nombre."', '".$this -> apellido."')";
-		echo $sql;
+		$sql="INSERT INTO usuarios (user, password, status, question, answer, name, last_name) values('".$this->user."',MD5('".$this->password."'), 1, '".$this -> preguntaSecreta."', '".$this -> respuestaSecreta."' , '".$this -> nombre."', '".$this -> apellido."')";
 		return $this->idusuario=$conexion->ejecutar_sentencia($sql);
 	}
 	
@@ -87,7 +85,7 @@ class usuario
 			$this -> preguntaSecreta = $row["pregunta"];
 			$this -> respuestaSecreta = $row["respuesta"];
 			$this -> nombre = $row["name"];
-			$this -> apellido =$row["last_name"]
+			$this -> apellido =$row["last_name"];
 		}
 		mysql_free_result($result);
 	}

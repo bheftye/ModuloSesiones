@@ -1,21 +1,15 @@
 <?php
 	include_once('clases/usuario.php');
-	include_once('clases/datosusuario.php');
-	include_once('clases/tipousuario.php');
 	include_once('clases/seguridad.php');
 	$seguridad = new seguridad();
 	$seguridad->candado();
-	
-	
-	if(isset($_REQUEST['idusuario'])){
-		$id = $_REQUEST['idusuario'];
-		$operacion = 'modificarusuario';
-		$palabra = 'Editar Usuario';
+	session_start();
+	$idusuario = 0;
+	if($_SESSION["idusuario"] != 0)){
+		
 	}
 	else{
-		$id = 0;
-		$operacion = 'agregarusuario';
-		$palabra = 'Nuevo Usuario';
+		$idusuario = 0;
 	}
 	
 	$temporal = new usuario($id);
@@ -23,28 +17,12 @@
 	$temporal ->obtener_datos();
 	$tipousuario = new tipousuario();
 	$listipousuario = $tipousuario -> listaTipousuarioActivas();
-	if($temporal->idusuario != 0){
-		$disabled=' disabled';
-		$opciones = '	<span class="textHelper">Seleccione uno de las opciones:</span>
-                        <br>
-                        <div class="espacios">
-                        	<input onclick="cambiar()" type="checkbox" id="nameuser" name="nameuser" value="nameuser">
-							<label for="nameuser"><span></span>Cambiar el nombre de usuario</label>
-							<input onclick="cambiar2()" type="checkbox" id="contraseña" name="contra" value="pass">
-							<label for="contraseña"><span></span>Cambiar la contreseña</label>
-						</div>';
-	}
-	else{
-		$disabled='';
-		$opciones = '';
-	}
-	$clave='ModUsu';
-	$claveSelect='SelecTipo';
+	
 ?>
 <?php
 include('head.html');//Contiene los estilos y los metas.
 ?>
-	<title>FormularioUsuario</title>
+	<title>Info usuario</title>
 <?php
 include('header.html');//contiene las barras de arriba y los menus.
 include('menu.php');

@@ -5,10 +5,7 @@ function __autoload($nombre_clase) {
 }
 
 $operaciones=$_REQUEST['operaciones'];
-echo $operaciones;
-var_dump($_REQUEST);
 switch($operaciones){
-	
 		case "verificardisponibilidad":
 			 if(isset($_REQUEST["correo"])){
 			 	$boletinVerificador = new Boletin();
@@ -23,8 +20,8 @@ switch($operaciones){
 			break;
 
 		case 'agregarusuario':
-			$usuario= new usuario(0, $_REQUEST['usuario'], $_REQUEST['pass'],1,$_REQUEST["question_txt"], $_REQUEST["answer_txt"], $_REQUEST["name_txt"], $_REQUEST["last_name_txt"]);
-			$usuario->inserta_usuario();
+			$usuario = new usuario(0, $_REQUEST['usuario'], $_REQUEST['pass'],1,$_REQUEST["question_txt"], $_REQUEST["answer_txt"], $_REQUEST["name_txt"], $_REQUEST["last_name_txt"]);
+			$usuario -> inserta_usuario();
 			header('Location: index.php');
 		break;
 		case 'modificarusuario':
