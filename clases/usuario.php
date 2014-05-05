@@ -11,11 +11,13 @@ class usuario
 	var $respuestaSecreta;
 	var $nombre;
 	var $apellido;
+	var $email;
 	
-	function usuario($idusuario = 0, $user = '', $password = '', $stat = 1, $preguntaSecreta ="", $respuestaSecreta="", $nombre = "", $apellido ="")
+	function usuario($idusuario = 0, $user = '', $email = "", $password = '', $stat = 1, $preguntaSecreta ="", $respuestaSecreta="", $nombre = "", $apellido ="")
 	{
 		$this->idusuario=$idusuario;
 		$this->user=$user;
+		$this -> email = $email;
 		$this->password=$password;
 		$this->status=$stat;
 		$this -> preguntaSecreta = $preguntaSecreta;
@@ -27,7 +29,7 @@ class usuario
 	function inserta_usuario()
 	{
 		$conexion= new conexion();
-		$sql="INSERT INTO usuarios (user, password, status, question, answer, name, last_name) values('".$this->user."',MD5('".$this->password."'), 1, '".$this -> preguntaSecreta."', '".$this -> respuestaSecreta."' , '".$this -> nombre."', '".$this -> apellido."')";
+		$sql="INSERT INTO usuarios (user, email, password, status, question, answer, name, last_name) values('".$this->user."','".$this -> email."',MD5('".$this->password."'), 1, '".$this -> preguntaSecreta."', '".$this -> respuestaSecreta."' , '".$this -> nombre."', '".$this -> apellido."')";
 		return $this->idusuario=$conexion->ejecutar_sentencia($sql);
 	}
 	
@@ -40,7 +42,7 @@ class usuario
 			$pedazo2="user='".$this->user."',";
 		if ($this->password!='')   
 			$pedazo="password=MD5('".$this->password."'),";
-		$sql="update usuarios set ".$pedazo2." ".$pedazo."status='".$this->status."',idtipousuario=".$this->tiposusuario->idtipousuario.", pregunta = '".$this -> preguntaSecreta."', respuesta = '".$this -> respuestaSecreta."' where idusuario=".$this->idusuario;
+		$sql="update usuarios set ".$pedazo2." ".$pedazo."status='".$this->status."',idtipousuario=".$this->tiposusuario->idtipousuario.", email = '".$this -> email."' , pregunta = '".$this -> preguntaSecreta."', respuesta = '".$this -> respuestaSecreta."' where idusuario=".$this->idusuario;
 		return $conexion->ejecutar_sentencia($sql);
 	}
 	function modifica_usuario_pass()
@@ -80,6 +82,7 @@ class usuario
 			$this->idusuario=$row['id_user'];
 			$this->user=$row['user'];
 			$this->password=$row['password'];
+			$this -> email = $row["email"];
 			$this->status=$row['status'];
 			$this -> preguntaSecreta = $row["question"];
 			$this -> respuestaSecreta = $row["answer"];
@@ -89,10 +92,10 @@ class usuario
 		mysql_free_result($result);
 	}
 	
-	function VerficarDisponibilidadNomUsuario($nom)
+	function VerficarDisponibilidadUsuarioEmail()
 	{
 		$conexion=new conexion();
-		$sql="SELECT user FROM usuarios where user='".$nom."'";
+		$sql="SELECT user FROM usuarios where user='".$this -> user."' or email = '".$this -> email."'";
 		$result=$conexion->ejecutar_sentencia($sql);
 		$resultados=array();
 		while ($row=mysql_fetch_array($result))

@@ -162,7 +162,7 @@
       <div class="modal-body">
         <div class="row">
             <div class="col-sm-12" id="Infopass3"></div>
-            <p id="errorMessage">La contrasña debe ser de al menos 15 caracteres, un número, una mayúscula y un caracter extraño.<p/>
+            <p id="errorMessage"><?php if(isset($_REQUEST["er"])) echo $_REQUEST["er"];?> La contraseña debe ser de al menos 15 caracteres, un número, una mayúscula y un caracter extraño.<p/>
                 <form method="post" action="operaciones.php" onsubmit="return registrarUsuario()">   
                     <div id="titulo2" class="form-group espacios">
                         <input type="text" id="usuario2" name="usuario" class="form-control" placeholder="Usuario" >
