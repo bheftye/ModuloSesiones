@@ -7,9 +7,8 @@
 	else
 	$idusuario=0;
 
-	$usuario=new usuario($idusuario,'','','',0);
+	$usuario=new usuario($idusuario);
 	$usuario->obten_usuario();
-	$usuario->datosusuario->obtener_datos_usuario();
 	$seguridad = new seguridad();
 	$conf='conf';
 	$page = $_SERVER['SCRIPT_NAME'];
@@ -31,7 +30,7 @@
  							echo date('d')." ".$meses[date('n')-1]. " ".date('Y') ;
 						?>
                     </p>
-                    <span id="username"><?php echo $usuario->datosusuario->nombre;?></span>       	
+                    <span id="username"><?php echo $usuario->user;?></span>       	
                 </div>
             </div>
             <div id="navBlue" class="jumbotron navbar-fixed-top">
@@ -42,10 +41,8 @@
                 </div>
                 <div class="col-lg-10">
                     <ul id="ulmenu">
-                        <li onclick="cerrarsesion(<?=$idusuario?>)" id="li1"><img src="img/exit.png" width="15" height="17" class="imgresources"><span class="letras">Cerrar sesión</span></li>
-                        <li style="display: none" class="limenu"><img src="img/msn.png" width="18" height="14" class="imgresources"><span class="letras">Mensajes</span></li>
-                        <li id="user" class="limenu"><img src="img/user.png" width="19" height="19" class="imgresources"><span class="letras">Perfil</span></li>
-                        <li <?php if($seguridad->valida_permiso_usuario($_SESSION['idusuario'],$conf)==0) echo ' style="display:none" ';?> id="settings" class="limenu"><img src="img/tuerca.png" width="18" height="19" class="imgresources"><span class="letras">Configuración</span></li>
+                        <li onclick="cerrarsesion(<? echo ($idusuario != 0)? $usuario -> idusuario: '' ?>)" id="li1"><img src="img/exit.png" width="15" height="17" class="imgresources"><span class="letras">Cerrar sesión</span></li>
+                        </li>
                     </ul>
                 </div>
             </div>

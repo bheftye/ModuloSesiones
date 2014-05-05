@@ -162,10 +162,13 @@
       <div class="modal-body">
         <div class="row">
             <div class="col-sm-12" id="Infopass3"></div>
-            <p id="errorMessage">Hola<p/>
+            <p id="errorMessage">La contrasña debe ser de al menos 15 caracteres, un número, una mayúscula y un caracter extraño.<p/>
                 <form method="post" action="operaciones.php" onsubmit="return registrarUsuario()">   
                     <div id="titulo2" class="form-group espacios">
                         <input type="text" id="usuario2" name="usuario" class="form-control" placeholder="Usuario" >
+                    </div>
+                    <div id="correo2" class="form-group espacios">
+                        <input type="text" id="correo" name="correo" class="form-control" placeholder="Correo Electrónico" >
                     </div>
                     <div id="pass2" class="form-group espacios">
                         <input type="password" name="pass" id="password2" class="form-control" placeholder="Contraseña" >
@@ -258,14 +261,24 @@
         var apellido = $("#last_name_txt").val();
         var pregunta = $("#question_txt").val();
         var respuesta =$("#answer_txt").val();
+        var correo = $("#correo").val();
         var mensaje ="";
 
-        var camposLlenos = usuario != "" && password != "" && password2 != "" && nombre != "" && apellido != "" && pregunta != "" && respuesta != "";
+        var camposLlenos = usuario != "" && password != "" && password2 != "" && nombre != "" && apellido != "" && pregunta != "" && respuesta != "" && correo != "";
 
         if(camposLlenos){
+            if(!correo.match("[\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4}")){
+               mensaje = "Correo invalido";
+                 $("#errorMessage").html(mensaje).css({color:"red"});
+                return false;
+            }
             if(password == password2){
-                $.unblockUI();
-                return true;
+                if(password.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{15,}$")){
+                       $.unblockUI();
+                        return true;
+                }
+                mensaje = "Contraseña débil";
+               
             }
             else{
                 mensaje = "Contraseñas no coinciden.";

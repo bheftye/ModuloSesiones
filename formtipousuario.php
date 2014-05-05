@@ -25,7 +25,7 @@
 <?php
 include('head.html');//Contiene los estilos y los metas.
 ?>
-	<title>FormularioTipoUsuario</title>
+	<title>Información Usuario</title>
 <?php
 include('header.html');//contiene las barras de arriba y los menus.
 include('menu.php');

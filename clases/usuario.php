@@ -73,17 +73,16 @@ class usuario
 	function obten_usuario()
 	{
 		$conexion=new conexion();
-		$sql="select idusuario,user,password,status,idtipousuario from usuarios where idusuario=".$this->idusuario;
+		$sql="select * from usuarios where id_user=".$this->idusuario;
 		$result=$conexion->ejecutar_sentencia($sql);
 		while($row=mysql_fetch_array($result))
 		{
-			$this->idusuario=$row['idusuario'];
+			$this->idusuario=$row['id_user'];
 			$this->user=$row['user'];
 			$this->password=$row['password'];
 			$this->status=$row['status'];
-			$this->tiposusuario->idtipousuario=$row['idtipousuario'];
-			$this -> preguntaSecreta = $row["pregunta"];
-			$this -> respuestaSecreta = $row["respuesta"];
+			$this -> preguntaSecreta = $row["question"];
+			$this -> respuestaSecreta = $row["answer"];
 			$this -> nombre = $row["name"];
 			$this -> apellido =$row["last_name"];
 		}

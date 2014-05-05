@@ -5,18 +5,14 @@
 	$seguridad->candado();
 	session_start();
 	$idusuario = 0;
-	if($_SESSION["idusuario"] != 0)){
+	if(isset($_SESSION["idusuario"]) && $_SESSION["idusuario"] != 0 ){
 		
 	}
-	else{
-		$idusuario = 0;
-	}
 	
-	$temporal = new usuario($id);
-	$temporal -> obten_usuario();
-	$temporal ->obtener_datos();
-	$tipousuario = new tipousuario();
-	$listipousuario = $tipousuario -> listaTipousuarioActivas();
+	if($idusuario != 0){
+		$usuario = new usuario($idusuario);
+		$usuario -> obten_usuario();
+	}
 	
 ?>
 <?php
@@ -35,13 +31,13 @@ include('menu.php');
                 <div class="row rowedit">
                 	<!--Seccion del titulo y el boton de agregar-->
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <p class="titulo"><?php echo $palabra;?></p>
+                        <p class="titulo">Informaci&oacute;n Usuario</p>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     	<form id="form-validation" action="operaciones.php" method="post" name="form1" onsubmit="return validar_campos()">
                     		<input type="hidden" name="idusuario" value="<?php echo $temporal->idusuario; ?>"/>
                     		<input type="hidden" name="status" value="<?php echo $temporal->status; ?>" />
-                    		<button type="submit" <?php if($seguridad->valida_permiso_usuario($_SESSION['idusuario'],$clave)==0) echo ' disabled ';?> name="operaciones" value="<?php echo $operacion; ?>" class="buttonguardar">Guardar y Publicar</button>
+                    		<button type="submit" name="operaciones" value="modificarusuario" class="buttonguardar">Guardar</button>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     	<hr class="hrmenu">
@@ -58,13 +54,16 @@ include('menu.php');
                     <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
                     	<p class="subtitulo">Usuario y Contraseña:</p>
                     	<div id="nomuser" class="form-group espacios">
-                        	<input id="checkuser" <?=$disabled?> name="nomuser" type="text" class="form-control" placeholder="Ingrese el nombre de usuario aquí..." value="<?php echo $temporal->nomusuario; ?>">
+                        	<input id="checkuser" name="nomuser" type="text" class="form-control" placeholder="Ingrese el nombre de usuario aquí..." value="<?php echo ($idusuario != 0)?$usuario->user:'' ?>">
+                       	</div>
+                       	<div id="old_pass" class="form-group">
+                        	<input id="oldusepass" name="oldpass" type="password" class="form-control" placeholder="Ingrese la contraseña anterior aquí..." value="">
                        	</div>
                        	<div id="pass" class="form-group">
-                        	<input id="usepass" <?=$disabled?> name="pass" type="password" class="form-control" placeholder="Ingrese la contraseña aquí..." value="">
+                        	<input id="usepass" name="pass" type="password" class="form-control" placeholder="Ingrese la contraseña nueva aquí..." value="">
                        	</div>
                        	<div id="repass" class="form-group">
-                        	<input id="userepass" <?=$disabled?> name="repass" type="password" class="form-control" placeholder="Reingrese la contraseña aquí..." value="">
+                        	<input id="userepass" name="repass" type="password" class="form-control" placeholder="Reingrese la contraseña nueva aquí..." value="">
                        	</div>
                        	<div class="espacios" id="valuser"></div>
         				<?=$opciones?>
@@ -72,31 +71,18 @@ include('menu.php');
                     <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
                     	<p class="subtitulo">Datos del usuario:</p>
                     	<div id="nombre" class="form-group espacios">
-                        	<input name="nombre" type="text" class="form-control" placeholder="Ingrese el nombre completo aquí..." value="<?php echo $temporal->datosusuario->nombre; ?>">
+                        	<input name="nombre" type="text" class="form-control" placeholder="Ingrese el nombre completo aquí..." value="<?php echo ($idusuario != 0)?$usuario->nombre:'' ?>">
                        	</div>
-                       	<div id="email" class="form-group espacios">
-                        	<input name="email" type="text" class="form-control" placeholder="Ingrese el correo aquí..." value="<?php echo $temporal->datosusuario->email; ?>">
+                       	<div id="apellido" class="form-group espacios">
+                        	<input name="apellido" type="text" class="form-control" placeholder="Ingrese el apellido aquí..." value="<?php echo ($idusuario != 0)?$usuario->apellido:'' ?>">
                        	</div>
-                       	<div id="telefono" class="form-group espacios">
-                        	<input name="telefono" type="text" class="form-control" placeholder="Ingrese el telefono aquí..." value="<?php echo $temporal->datosusuario->telefono; ?>">
+                       	<div id="pregunta" class="form-group espacios">
+                        	<input name="question" type="text" class="form-control" placeholder="Ingrese la pregunta aquí..." value="<?php echo ($idusuario != 0)?$usuario->preguntaSecreta:'' ?>">
                        	</div>
-                       	<div <?php if($seguridad->valida_permiso_usuario($_SESSION['idusuario'],$claveSelect)==0) echo ' style="display: none"';?>>
-	                       	<span class="textHelper">Seleccione que tipo de usuario quiere que pertenezca:</span>
-							<br>
-								<div class="styled-select-form">
-		                        	<select id="typeuser" name="tipo">
-		                        		<option value="0" class="styled-select-form" >Seleccione tipo de usuario</option>
-		                        	<?php
-		                        	foreach ($listipousuario as $elemento) {
-										$bandera = '';
-										if($elemento['idtipousuario'] == $temporal->tiposusuario->idtipousuario)
-										$bandera = ' selected';
-										echo '<option value="'.$elemento['idtipousuario'].'" '.$bandera.' class="styled-select-form" >'.$elemento['nomtipousuario'].'</option>';
-									}	
-		                        	?>	                                                        
-		                            </select>
-		                        </div>
-	                    </div>
+                       	<div id="respuesta" class="form-group espacios">
+                        	<input name="answer" type="text" class="form-control" placeholder="Ingrese la respuesta aquí..." value="<?php echo ($idusuario != 0)?$usuario->respuestaSecreta:'' ?>">
+                       	</div>
+    
                     </div>                  
                     <div class="clearfix"></div>                    
                     <!--Este div contiene la barra inferior-->
@@ -106,7 +92,7 @@ include('menu.php');
                     <!--Este div contiene al boton inferior-->
                     <div class="clearfix"></div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    		<button type="submit" <?php if($seguridad->valida_permiso_usuario($_SESSION['idusuario'],$claveSelect)==0) echo ' disabled ';?> name="operaciones" value="<?php echo $operacion; ?>" class="buttonguardar">Guardar y Publicar</button>
+                    		<button type="submit" name="operaciones" value="<?php echo $operacion; ?>" class="buttonguardar">Guardar y Publicar</button>
                         </form>
                     </div>
                     
